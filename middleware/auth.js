@@ -16,12 +16,15 @@ async function restrictToLoggedInUserOnly(req,res,next) {
 }
 
 async function checkAuth(req,res,next) {
-    const uuid = req.cookies?.uid;
+    //const uuid = req.cookies?.uid;           
+    const uuid = req.headers["Authorization"];
 
-    // if(!uuid){
-    //     return res.redirect("/login")
-    // }
-    const user = getUser(uuid);
+    if(!uuid){
+        return res.redirect("/login")
+    }
+
+    const token = uuid.split("Bearer ")[1];
+    const user = getUser(token);
     // if(!user) {
     //     return res.redirect("/login")
     // }
