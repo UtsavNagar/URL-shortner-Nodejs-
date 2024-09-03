@@ -27,7 +27,7 @@ async function handleUserLogin(req,res) {
             error:"Invalid email or password"
         });
     }
-    const jwtToken = setUser(sessionId,user);
+    const jwtToken = setUser(user);
     res.cookie('uid',jwtToken)
     return res.redirect("/");
 }
