@@ -4,7 +4,8 @@ const secreteKey = "utsav$ji@NAGAR"
 function setUser (user) {
     const payload = {
         _id : user._id,
-        email : user.email
+        email : user.email,
+        role:user.role
     }
     return JWT.sign(payload,secreteKey);        // genrating jwt tokens
 }

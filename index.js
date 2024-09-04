@@ -3,7 +3,7 @@ const path = require("path");
 const { connectMoangoDB }= require("./connect")
 const URL = require("./models/url")
 const cookieParser = require("cookie-parser")
-const {restrictToLoggedInUserOnly , checkAuth}  = require("./middleware/auth")
+const {checkForAuthentication,restrictTo}  = require("./middleware/auth")
 
 const urlRoute = require("./routes/url")
 const staticRoute = require("./routes/staticRouter")
@@ -22,8 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 app.use(cookieParser())
 
-app.use("/url",restrictToLoggedInUserOnly,urlRoute);
-app.use("/", checkAuth ,staticRoute);
+app.use("/url",restrictTo(["NORMAL"]),urlRoute);
+app.use("/", checkForAuthentication ,staticRoute);
 app.use("/user",userRoute);
 
 app.get("/url/:shortId",async (req,res)=>{

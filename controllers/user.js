@@ -20,7 +20,6 @@ async function handleUserSignUp(req,res) {
 
 async function handleUserLogin(req,res) {
     const {email,password} = req.body;
-    console.log(email,password)
     
     const user = await User.findOne({email,password});
     if(!user){
@@ -29,8 +28,9 @@ async function handleUserLogin(req,res) {
         });
     }
     const jwtToken = setUser(user);
-    res.json(jwtToken);
-    return res.redirect("/");
+    res.cookie('token',jwtToken)
+    return res.redirect("/")
+    // return res.json({token : jwtToken});
 }
 
 module.exports = {
